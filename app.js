@@ -13,8 +13,9 @@ const dbURI = 'mongodb+srv://netninja:test1234@cluster0.1ztr7.mongodb.net/<dbnam
 app.set('view engine', 'ejs');
 
 // Listen for requests
-app.listen(3000, () => {
-    console.log('listening to 3000...')
+const port = process.env.port || 3000;
+app.listen(port, () => {
+    console.log('listening to: ', port);
 });
 
 //Middleware and static files
