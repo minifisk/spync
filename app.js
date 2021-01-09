@@ -1,6 +1,5 @@
 const { response } = require('express');
 const express = require('express');
-const morgan = require('morgan');
 
 //express app
 const app = express();
@@ -23,7 +22,7 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     const blogs = [
-        {title: 'Katt hittar ägg', snippet: 'Katten tar sönder det'},
+        {title: 'Katt NAFSAR ägg', snippet: 'Katten tar sönder det'},
         {title: 'Katt tappar ägg', snippet: 'Katten tar sönder det'},
         {title: 'Katt mosar ägg', snippet: 'Katten tar sönder det'},
     ];
