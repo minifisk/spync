@@ -1,0 +1,24 @@
+<h6>Dashboard</h6>
+<h3>Welcome, {{name}}</h3>
+
+<h5>Here are your favorite artists</h5>
+<ul>
+    {{#each artistPreferences}}
+    <li><b>{{this.name}}</b></li>
+    <a href="{{this.url}}">
+        <img src="{{this.image}}" alt="{{this.name}}" width="300">
+    </a>
+    {{/each}}
+</ul>
+
+
+<h5>Here are your favorite songs</h5>
+<ul>
+    {{#each trackPreferences}}
+        <li><a href="{{this.url}}">
+            <b>{{this.name}}</b>
+        </a> 
+        - {{this.artist}} - {{this.popularity}}
+    </li>
+    {{/each}}
+</ul>

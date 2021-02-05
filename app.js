@@ -1,70 +1,81 @@
-const { response } = require('express');
+const path = require('path');
 const express = require('express');
 const mysql = require('mysql');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db')
+const morgan = require('morgan'); 
+const exphbs = require('express-handlebars')  
+const passport = require('passport');
+const session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+
+
+
+// Load config
+dotenv.config({ path: './config/config.env' });
+
+// Passport config
+require('./config/passport')(passport);
 
 
 //express app
 const app = express();
 
+// Logging
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
-//Register view engine
-app.set('view engine', 'ejs');
+// Handlebars
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
+app.set('view engine', '.hbs');
 
-//Middleware and static files
-app.use(express.static('public'));
+// Sessions
 
-app.get('/', (req, res) => {
-    const blogs = [
-        {title: 'Katt NAFSAR ägg', snippet: 'Katten tar sönder det'},
-        {title: 'Katt tappar ägg', snippet: 'Katten tar sönder det'},
-        {title: 'Katt mosar ägg', snippet: 'Katten tar sönder det'},
-    ];
+// Setting options for DB connected to sessions
+var options = {
+	host: 'spyncdb.chozhfmdzzyy.eu-central-1.rds.amazonaws.com',
+	port: 3306,
+	user: 'admin',
+	password: 'jUFX823mUYwcAll5cGmg',
+	database: 'spyncdb'
+};
 
-    res.render('index', { blogs });
+// Create new store object from sessions
+var sessionStore = new MySQLStore(options);
+
+// Set app to ues sessions with above settings
+app.use(session({
+	key: 'session_cookie_name',
+	secret: 'session_cookie_secret',
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+//Static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
+app.use('/', require('./routes/index'));
+app.use('/auth', require('./routes/auth'));
+
+// Listen for requests
+const port = process.env.port || 8888;
+app.listen(port, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}`);
 });
 
-app.get('/about', (req, res) => {
-    res.render('about', { title: 'KATTOM' });
-});
 
-app.get('/blogs/create', (req, res) => {
-    res.render('create');
-})
-
-//404 page
+/* //404 page
 app.use((req, res) => {
     res.status(404).render('404')
-})
+}) */
 
-/* // Connect to database
-var connection = mysql.createConnection({
-    host     : "spync-database-instance-1.csydz3ayt58b.us-east-2.rds.amazonaws.com",
-    user     : "admin",
-    password : "AHBhd8Fr&Afu",
-    port     : "8080"
-  }); */
 
-  // Connect to database
-var connection = mysql.createConnection({
-    host     : process.env.RDS_HOSTNAME,
-    user     : process.env.RDS_USERNAME,
-    password : process.env.RDS_PASSWORD,
-    port     : process.env.RDS_PORT 
-  });
-  
-  connection.connect(function(err) {
-    if (err) {
-      console.error('Database connection failed: ' + err.stack);
-      return;
-    }
-  
-    console.log('Connected to database.');
-  });
-  
-  connection.end();
 
-  // Listen for requests
-const port = process.env.port || 3000;
-app.listen(port, () => {
-    console.log('listening to: ', port);
-});
