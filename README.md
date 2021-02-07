@@ -2,7 +2,7 @@
 An awesome app for comparing your music taste with your friends
 
 Acknowledgments
-Huge thanks to @blahbla for helping me figure out some async problems with the passport module.
+Huge thanks to @blahah for helping me figure out some async problems with the passport module.
 
 Run by:
 
