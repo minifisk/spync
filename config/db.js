@@ -1,12 +1,13 @@
 const mysql2 = require('mysql2/promise');
+require('dotenv').config();
 
 // Connect to server (to be used for creating pool instances and queries)
 const pool = mysql2.createPool({
-    host     : "spyncdb.chozhfmdzzyy.eu-central-1.rds.amazonaws.com",
-    user     : "admin",
-    password : "jUFX823mUYwcAll5cGmg",
-    port     : "3306",
-    database : "spyncdb",
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASSWORD,
+    port     : process.env.DB_PORT,
+    database : process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

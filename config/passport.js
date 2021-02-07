@@ -14,9 +14,9 @@ module.exports = function(passport) {
     passport.use(
         new SpotifyStrategy(
           {
-            clientID: '2f0be1f441d641bc8bcc960de9789196',
-            clientSecret: '9088b47ae05241748ceae01d06871265',
-            callbackURL: 'http://localhost:8888/auth/spotify/callback',
+            clientID: process.env.SPOTIFY_CLIENT_ID,
+            clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+            callbackURL: process.env.SPOTIFY_CALLBACK_URL
           },
           async (accessToken, refreshToken, expires_in, profile, done) => {
             
@@ -60,9 +60,9 @@ module.exports = function(passport) {
 
                     // Initialize spotifyapi object
                     var spotifyApi = new SpotifyWebApi({
-                      clientID: '2f0be1f441d641bc8bcc960de9789196',
-                      clientSecret: '9088b47ae05241748ceae01d06871265',
-                      callbackURL: 'http://localhost:8888/auth/spotify/callback',
+                      clientID: process.env.SPOTIFY_CLIENT_ID,
+                      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+                      callbackURL: process.env.SPOTIFY_CALLBACK_URL
                     });
 
                     // Set accesstoken for api objct

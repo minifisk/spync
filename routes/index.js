@@ -73,7 +73,7 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
                 });
             } catch (error) {
                 console.log(error);
-                console.log('Current user from session not found in DB, logging out and redirecting to log-in...');
+                console.log('Current user from session not found in DB, logging out, redirecting to log-in...');
                 req.logout();
                 res.redirect('/');
             }

@@ -34,11 +34,11 @@ app.set('view engine', '.hbs');
 
 // Setting options for DB connected to sessions
 var options = {
-	host: 'spyncdb.chozhfmdzzyy.eu-central-1.rds.amazonaws.com',
-	port: 3306,
-	user: 'admin',
-	password: 'jUFX823mUYwcAll5cGmg',
-	database: 'spyncdb'
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASSWORD,
+    port     : process.env.DB_PORT,
+    database : process.env.DB_NAME,
 };
 
 // Create new store object from sessions
