@@ -28,8 +28,7 @@ module.exports = function(passport) {
         aUser.profilePicture = profile.photos[0];
         aUser.email = profile._json.email;
         aUser.contactCode = stringGen(7);
-        aUser.accessToken = accessToken;
-        aUser.refreshToken = refreshToken;
+
       
       // NOTE: don't run the code below async - thanks to @blahah
 
@@ -92,7 +91,7 @@ module.exports = function(passport) {
           });
 
         /* STEP 2: RETRIEVE TOP TRACKS FOR CURRENT USER */
-        await spotifyApi.getMyTopTracks({ limit: 2 })
+        await spotifyApi.getMyTopTracks({ limit: 5 })
           .then(function(data) {
             let topTracksRaw = data.body.items;
 

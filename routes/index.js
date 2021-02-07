@@ -21,9 +21,19 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
             return artist_ids = await pool.query('SELECT artist_id from artistPreferences WHERE user_id = ?', [user_id]);
         }
 
+        // Get a collection of a users favorite tracks's 
+        async function getTrackIdCollection (user_id) {
+            return track_ids = await pool.query('SELECT track_id from trackPreferences WHERE user_id = ?', [user_id]);
+        }
+
         // Get the data about a specific artist
         async function getArtistInfo (artist_id) {
             return artistInfo = await pool.query('SELECT artist_name, artist_image, artist_url from artists WHERE artist_id = ?', [artist_id]);
+        }
+
+        // Get the data about a specific track
+        async function getTrackInfo (track_id) {
+            return trackInfo = await pool.query('SELECT track_name, track_artist, track_url, track_popularity from tracks WHERE track_id = ?', [track_id]);
         }
 
         // Create an structured ArtistObject 
@@ -36,18 +46,41 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
             return thisArtist;
         }
 
-  /*    Async function that maps through a users artistPreferences IDs
-        and use helper functions to return an array of artistPreferences DATAs
-*/      async function getArtistsArray (user_id) {
-            let artistPreferencesArray = [];
+        // Create an structured ArtistObject 
+        function getTrackObject (trackInfo) {
+            const track = {};
+            const thisTrack = Object.create(track);
+            thisTrack.name = trackInfo['track_name'];
+            thisTrack.artist = trackInfo['track_artist'];
+            thisTrack.url = trackInfo['track_url'];
+            thisTrack.popularity = trackInfo['track_popularity'];
+            return thisTrack;
+        }
+
+        /* Async function that maps through a users artistPreferences IDs
+        and use helper functions to return an array of artistPreferences DATAs */
+            async function getArtistsArray (user_id) {
             const this_artist_ids = await getArtistIdCollection(user_id);
-            const array = await Promise.all(this_artist_ids[0].map(async (artist, index) => {
+            const array = await Promise.all(this_artist_ids[0].map(async (artist) => {
                 const this_artist_info = await getArtistInfo(artist.artist_id);
                 return this_artist_info;                
 
             }));
             return array;
-        }
+        };
+
+
+        /* Async function that maps through a users artistPreferences IDs
+        and use helper functions to return an array of artistPreferences DATAs */
+        async function getTracksArray (user_id) {
+            const this_track_ids = await getTrackIdCollection(user_id);
+            const array = await Promise.all(this_track_ids[0].map(async (track) => {
+                const this_track_info = await getTrackInfo(track.track_id);
+                return this_track_info;                
+
+            }));
+            return array;
+        };
 
 /*      Async function that await artistPreferencesData and then render
         a view to the website
@@ -59,29 +92,29 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
                 const user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
                 const user_id = user_info[0][0].user_id;
                 await getArtistsArray(user_id).then(getArtistReturnVal => {
-                    console.log(getArtistReturnVal);
                     artistArray = [];
-                    getArtistReturnVal.map( artist => {
+                    getArtistReturnVal.map(artist => {
                         artistArray.push(getArtistObject(artist[0][0]));
                     })
-                    console.log(artistArray);
-     
-                    res.render('dashboard', {
-                        name: req.user.displayName,
-                        artistPreferences: artistArray
-                    });
+                });
+                await getTracksArray(user_id).then(getTrackReturnVal => {
+                    trackArray = [];
+                    getTrackReturnVal.map(track => {
+                        trackArray.push(getTrackObject(track[0][0]));
+                    })
+                });
+                        
+                res.render('dashboard', {
+                    name: req.user.displayName,
+                    artistPreferences: artistArray,
+                    trackPreferences: trackArray
                 });
             } catch (error) {
                 console.log(error);
                 console.log('Current user from session not found in DB, logging out, redirecting to log-in...');
                 req.logout();
                 res.redirect('/');
-            }
-           
-     
-                
-            
-            
+            }     
         }
 
         /* Invoking main function */
