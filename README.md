@@ -5,7 +5,7 @@ Run by:
 
 1) Creating a .ENV file with the following variables 
 
-A MYSQL database host
+Variables for a MYSQL database host:
 
 DB_HOST = "database endpoint"<br>
 DB_USER = "username"<br>
@@ -13,7 +13,7 @@ DB_PASSWORD = "password"<br>
 DB_PORT = "port"<br>
 DB_NAME = "databasename"<br>
 
-Spotify client variables (create a sportify dev account if you don't have one and create an app: https://developer.spotify.com/dashboard/)
+Spotify client variables (create a sportify dev account if you don't have one and create an app: https://developer.spotify.com/dashboard/):
 
 SPOTIFY_CLIENT_ID = "client id"<br>
 SPOTIFY_CLIENT_SECRET = "client secret"<br>
