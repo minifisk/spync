@@ -7,11 +7,11 @@ Run by:
 
 A MYSQL database host
 
-DB_HOST = <database endpoint>
-DB_USER = <username>
-DB_PASSWORD = <password>
-DB_PORT = <port>
-DB_NAME = <databasename>
+DB_HOST = "database endpoint"
+DB_USER = "username"
+DB_PASSWORD = "password"
+DB_PORT = "port"
+DB_NAME = "databasename"
 
 Spotify client variables (create a sportify dev account if you don't have one and create an app: https://developer.spotify.com/dashboard/)
 
