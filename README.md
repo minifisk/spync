@@ -7,7 +7,7 @@ Run by:
 
 A MYSQL database host
 
-DB_HOST = "database endpoint"
+DB_HOST = "database endpoint"<br>
 DB_USER = "username"
 DB_PASSWORD = "password"
 DB_PORT = "port"
