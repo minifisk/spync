@@ -1,18 +1,12 @@
 const path = require('path');
 const express = require('express');
-const mysql = require('mysql');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db')
+
 const morgan = require('morgan'); 
 const exphbs = require('express-handlebars')  
 const passport = require('passport');
 const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
-
-
-
-// Load config
-dotenv.config({ path: './config/config.env' });
+require('dotenv-flow').config();
 
 // Passport config
 require('./config/passport')(passport);
@@ -22,9 +16,9 @@ require('./config/passport')(passport);
 const app = express();
 
 // Logging
-if (process.env.NODE_ENV === 'development') {
+/* if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
-}
+} */
 
 // Handlebars
 app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));

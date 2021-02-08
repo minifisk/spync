@@ -76,7 +76,19 @@ const pool = require('./db');
 /*       createArtistPreferences();
  */  
 
-  
+  // Create a artist preferences table
+
+  async function createFriendships() {
+    /*     await pool.query('SET FOREIGN_KEY_CHECKS=0');
+     *//*     await pool.query('DROP TABLE friendships');
+     */    
+       await pool.query('CREATE TABLE friendships (requester_id INTEGER NOT NULL, addressee_id INTEGER NOT NULL, added_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, FOREIGN KEY(requester_id) REFERENCES users(user_id), FOREIGN KEY(addressee_id) REFERENCES users(user_id))');
+        console.log('Done');
+      }
+    
+/*       createFriendships();
+ */  
+
   
 
    
