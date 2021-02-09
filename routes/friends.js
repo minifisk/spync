@@ -17,6 +17,38 @@ router.get('/add', ensureAuth, async (req, res) => {
     });
 })
 
+// @Desc    Show overview of friends
+// @route    GET /friends/view
+router.get('/view', ensureAuth, async (req, res) => {
+
+    const current_username = req.session.passport.user.username;
+    const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
+    const this_user_id = this_user_info[0][0].user_id;
+    const user_friendships1 = await pool.query('SELECT * FROM friendships WHERE requester_id = ?', [this_user_id]);
+    const user_friendships2 = await pool.query('SELECT * FROM friendships WHERE addressee_id = ?', [this_user_id]);
+
+/* 
+    console.log(user_friendships1[0][0].addressee_id)
+    console.log(user_friendships2[0][0].requester_id) */
+
+    let friends = [];
+    
+    // Map through friendships where current user is requester
+    user_friendships1[0].map( user => {
+        friends.push(user.addressee_id);
+    })
+
+
+    // Map through friendships where current user is addressee
+    user_friendships2[0].map( user => {
+        friends.push(user.requester_id);
+    })
+
+    console.log(friends);
+
+    res.render('friends/view');
+})
+
 // @Desc    Process the add form
 // @route    POST /friends
 router.post('/', ensureAuth, async (req, res) => {
@@ -37,16 +69,51 @@ router.post('/', ensureAuth, async (req, res) => {
         const user_name = user_info[0][0].username;
         const display_name = user_info[0][0].displayName;
 
-        // Update friendship in database
-        await pool.query('INSERT INTO friendships (requester_id, addressee_id) VALUES (?, ?)', [requester_user_id, addressee_user_id]);
 
-        res.render('friends/add', {
-            contactCode: contactCode,
-            prompt: 'Friend added successfully: ',
-            userid : addressee_user_id,
-            username: user_name,
-            displayname: display_name
-        });
+
+        // CHeck if friendship already exist
+
+            // Check if any rows where:
+            // requester_user_id = requester_ud AND addressee_user_ud = addressee_id
+            // OR
+            // requester_user_ud = addresee_id AND addresee_user_id = requester_id
+            try {
+                const friendshipStatus = await pool.query('SELECT * FROM friendships WHERE requester_id = ? AND addressee_id = ? OR requester_id = ? AND addressee_id = ?', [requester_user_id, addressee_user_id, addressee_user_id, requester_user_id]);         
+                
+
+                if (friendshipStatus[0].length > 0 || addressee_user_id === requester_user_id) {
+
+                    // If friendship already exist only return message
+                    res.render('friends/add', {
+                        contactCode: contactCode,
+                        error: 'Friend already added or you are trying to add yourself!'
+                    });
+                    
+                } 
+                               
+                
+                else {
+
+                    // If it don't exist, Update friendship in database
+                    await pool.query('INSERT INTO friendships (requester_id, addressee_id) VALUES (?, ?)', [requester_user_id, addressee_user_id]);
+
+                    res.render('friends/add', {
+                        contactCode: contactCode,
+                        prompt: 'Friend added successfully: ',
+                        userid : addressee_user_id,
+                        username: user_name,
+                        displayname: display_name
+                    });
+                }
+                
+            } catch (error) {
+                console.log(error)
+
+ 
+            }
+
+
+
 
     } catch (error) {
         res.render('friends/add', {
