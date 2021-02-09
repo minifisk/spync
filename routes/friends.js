@@ -21,32 +21,60 @@ router.get('/add', ensureAuth, async (req, res) => {
 // @route    GET /friends/view
 router.get('/view', ensureAuth, async (req, res) => {
 
-    const current_username = req.session.passport.user.username;
-    const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
-    const this_user_id = this_user_info[0][0].user_id;
-    const user_friendships1 = await pool.query('SELECT * FROM friendships WHERE requester_id = ?', [this_user_id]);
-    const user_friendships2 = await pool.query('SELECT * FROM friendships WHERE addressee_id = ?', [this_user_id]);
 
-/* 
-    console.log(user_friendships1[0][0].addressee_id)
-    console.log(user_friendships2[0][0].requester_id) */
+    // Function for getting a users data and returning an object with it
+    async function getUserData(user_id) {
+        const user = {};
+        const thisUser = Object.create(user);
+        const userData = await pool.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
+        user.displayName = userData[0][0].displayName;
+        user.profilePicture = userData[0][0].profilePicture;
+        user.contactCode = userData[0][0].contactCode;
+        return user;
+    }
 
-    let friends = [];
+    async function mapFriends() {
+        const current_username = req.session.passport.user.username;
+        const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
+        const this_user_id = this_user_info[0][0].user_id;
+        const user_friendships1 = await pool.query('SELECT * FROM friendships WHERE requester_id = ?', [this_user_id]);
+        const user_friendships2 = await pool.query('SELECT * FROM friendships WHERE addressee_id = ?', [this_user_id]);
     
-    // Map through friendships where current user is requester
-    user_friendships1[0].map( user => {
-        friends.push(user.addressee_id);
-    })
+    
+        // Array for storing friends user ID's
+        let friends = [];
+        
+        // Map through friendships where current user is requester
+        user_friendships1[0].map(user => {
+            friends.push(user.addressee_id);
+        })
+    
+        // Map through friendships where current user is addressee
+        user_friendships2[0].map( user => {
+            friends.push(user.requester_id);
+        })
+    
+        // Array for storing data for friends
+        let friendsData = [];
+    
+        friends.map(async (friend) => {
+            friendsData.push(await getUserData(friend));
+        })
+
+        return friendsData;
+    }
+
+    async function renderView () {
+        console.log(await mapFriends());
+        res.render('friends/view');
+
+    }
+
+    renderView();
 
 
-    // Map through friendships where current user is addressee
-    user_friendships2[0].map( user => {
-        friends.push(user.requester_id);
-    })
 
-    console.log(friends);
 
-    res.render('friends/view');
 })
 
 // @Desc    Process the add form
