@@ -12,6 +12,8 @@ router.get('/', ensureGuest, (req, res) => {
     })
 })
 
+
+
 // @Desc    Dashboard 
 // @route    GET /dashboard 
 router.get('/dashboard', ensureAuth, async (req, res) => {
@@ -70,6 +72,7 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
             try {
                 const current_username = req.session.passport.user.username;
                 const user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
+                const contactCode = user_info[0][0].contactCode;
                 const user_id = user_info[0][0].user_id;
                 await getArtistsArray(user_id).then(getArtistReturnVal => {
                     artistArray = [];
@@ -87,7 +90,8 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
                 res.render('dashboard', {
                     name: req.user.displayName,
                     artistPreferences: artistArray,
-                    trackPreferences: trackArray
+                    trackPreferences: trackArray,
+                    contactCode: contactCode
                 });
 
             } catch (error) {

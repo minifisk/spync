@@ -1,24 +1,28 @@
 const path = require('path');
 const express = require('express');
-
 const morgan = require('morgan'); 
 const exphbs = require('express-handlebars')  
 const passport = require('passport');
 const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
+
+// Dotenv for config files
 require('dotenv-flow').config();
 
 // Passport config
 require('./config/passport')(passport);
 
-
 //express app
 const app = express();
 
+// Body parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Logging
-/* if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
-} */
+}
 
 // Handlebars
 app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
@@ -58,6 +62,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
+app.use('/friends', require('./routes/friends'));
+
 
 // Listen for requests
 const port = process.env.port || 8888;
