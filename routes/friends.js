@@ -33,10 +33,8 @@ router.get('/view', ensureAuth, async (req, res) => {
         return user;
     }
 
-    async function mapFriends() {
-        const current_username = req.session.passport.user.username;
-        const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
-        const this_user_id = this_user_info[0][0].user_id;
+    async function mapFriends(this_user_id) {
+
         const user_friendships1 = await pool.query('SELECT * FROM friendships WHERE requester_id = ?', [this_user_id]);
         const user_friendships2 = await pool.query('SELECT * FROM friendships WHERE addressee_id = ?', [this_user_id]);
     
@@ -65,7 +63,12 @@ router.get('/view', ensureAuth, async (req, res) => {
     }
 
     async function renderView () {
-        console.log(await mapFriends());
+        const current_username = req.session.passport.user.username;
+        const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
+        const this_user_id = this_user_info[0][0].user_id;
+        
+        console.log(await mapFriends(this_user_id));
+        
         res.render('friends/view');
 
     }
