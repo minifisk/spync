@@ -17,6 +17,23 @@ router.get('/add', ensureAuth, async (req, res) => {
     });
 })
 
+// @Desc    Remove friend
+// @route    GET /friends/remove
+router.post('/remove', ensureAuth, async (req, res) => {
+
+    try {
+        const currentUserData = await pool.query('SELECT user_id FROM users WHERE username = ?', [req.session.passport.user.username]);
+        const currentUserId = currentUserData[0][0].user_id;
+        const friendToDeleteData = await pool.query('SELECT user_id FROM users WHERE contactCode = ?', [req.body.contactCode]);
+        const friendToDeleteId = friendToDeleteData[0][0].user_id;
+        await pool.query('DELETE FROM friendships WHERE requester_id = ? AND addressee_id = ? OR requester_id = ? AND addressee_id = ?', [currentUserId, friendToDeleteId, friendToDeleteId, currentUserId]);
+        res.redirect('./view')
+    } catch (error) {
+        console.log(error)
+        res.redirect('./view')
+    }
+})
+
 // @Desc    Show overview of friends
 // @route    GET /friends/view
 router.get('/view', ensureAuth, async (req, res) => {
@@ -42,6 +59,7 @@ router.get('/view', ensureAuth, async (req, res) => {
         // Array for storing friends user ID's
         let friends = [];
         
+       
         // Map through friendships where current user is requester
         user_friendships1[0].map(user => {
             friends.push(user.addressee_id);
@@ -55,9 +73,11 @@ router.get('/view', ensureAuth, async (req, res) => {
         // Array for storing data for friends
         let friendsData = [];
     
-        friends.map(async (friend) => {
-            friendsData.push(await getUserData(friend));
-        })
+        await Promise.all(
+            friends.map(async (friend) => {
+                friendsData.push(await getUserData(friend));
+            })
+        )
 
         return friendsData;
     }
@@ -67,17 +87,15 @@ router.get('/view', ensureAuth, async (req, res) => {
         const this_user_info = await pool.query('SELECT * from users WHERE username = ?', [current_username]);
         const this_user_id = this_user_info[0][0].user_id;
         
-        console.log(await mapFriends(this_user_id));
+        const friendArray = await mapFriends(this_user_id);
         
-        res.render('friends/view');
+        res.render('friends/view', {
+            friendArray: friendArray
+        });
 
     }
 
     renderView();
-
-
-
-
 })
 
 // @Desc    Process the add form
@@ -128,13 +146,7 @@ router.post('/', ensureAuth, async (req, res) => {
                     // If it don't exist, Update friendship in database
                     await pool.query('INSERT INTO friendships (requester_id, addressee_id) VALUES (?, ?)', [requester_user_id, addressee_user_id]);
 
-                    res.render('friends/add', {
-                        contactCode: contactCode,
-                        prompt: 'Friend added successfully: ',
-                        userid : addressee_user_id,
-                        username: user_name,
-                        displayname: display_name
-                    });
+                    res.redirect('friends/view');
                 }
                 
             } catch (error) {

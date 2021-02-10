@@ -10,21 +10,38 @@
 </head>
 <body>
 
-    <h3>View current friends</h3>
+    <h3>Your current friends</h3>
 
 <ul>
-    {{#each artistPreferences}}
-    <li><b>{{this.name}}</b></li>
-    <a href="{{this.url}}">
-        <img src="{{this.image}}" alt="{{this.name}}" width="300">
-    </a>
+    {{#each friendArray}}
+
+       <div class="container login-container">
+        <div class="card">
+            <div class="card-content">
+                <li><b>{{this.displayName}}</b></li>
+                <li><b>{{this.contactCode}}</b></li>
+                <img src="{{this.profilePicture}}" alt="{{this.name}}" width="300">    
+                
+                
+                <form action="./compare" method="POST" class="col s6">
+                    <input type="submit" value="Compare music" class="btn-small">
+                </form> 
+                
+                <form action="./remove" method="POST" class="col s6">
+                    <input type="hidden" id="contactCode" name="contactCode" value="{{this.contactCode}}">
+                    <input type="submit" value="Remove friend" class="red darken-1 btn-small">
+                </form> 
+               
+               
+            </div>
+        </div>
+    </div>
+
+
     {{/each}}
 </ul>
 
-
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
 </html>
