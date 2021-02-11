@@ -1,0 +1,55 @@
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    // For materialize
+    $(document).ready(function() {
+        $('.collapsible').collapsible();
+    })
+
+</script>
+
+<h6>Mutural music with {{friend}}</h6>
+
+<a href="/friends/view" class="waves-effect waves-light btn-small">Back to all friends</a>
+
+<ul class="collapsible">
+    <li>
+        <div class="collapsible-header"><i class="material-icons">album</i>Mutural favorite tracks</div>
+        <div class="collapsible-body"><span>
+            <ul>
+                {{#each trackArray}}
+                    <li><a href="{{this.track_url}}">
+                        <b>{{this.track_name}}</b>
+                    </a> 
+                    - <b>{{this.track_artist}}</b> - Popularity: {{this.track_popularity}} / 100
+                </li>
+                {{/each}}
+            </ul>
+
+
+        </span> <br><br>  
+</div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="material-icons">face</i>Mutural favorite artists</div>
+        <div class="collapsible-body">
+            <span>
+            <ul>
+                {{#each artistArray}}
+                <li><b>{{this.artist_name}}</b></li>
+                <li>Popularity: {{this.artist_popularity}} / 100 </li>
+                <a href="{{this.artist_url}}">
+                    <img src="{{this.artist_image}}" alt="{{this.artist_name}}" width="300">
+                </a>
+                {{/each}}
+            </ul>
+            </span>
+        </div>
+    </li>
+</ul>

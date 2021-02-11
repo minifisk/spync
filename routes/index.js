@@ -96,7 +96,6 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
 
             } catch (error) {
                 console.log(error);
-                console.log(`error, logging out and redirecting to login ${error}`);
                 req.logout();
                 res.redirect('/');
             }     
