@@ -60,7 +60,7 @@ module.exports = function(passport) {
         spotifyApi.setAccessToken(accessToken);
       
         /* STEP 1: RETRIEVE TOP ARTISTS FOR CURRENT USER */
-        await spotifyApi.getMyTopArtists({ limit: 5 })
+        await spotifyApi.getMyTopArtists({ limit: 50 })
           .then(function(data) {
             let topArtistsRaw = data.body.items;
           
@@ -91,7 +91,7 @@ module.exports = function(passport) {
           });
 
         /* STEP 2: RETRIEVE TOP TRACKS FOR CURRENT USER */
-        await spotifyApi.getMyTopTracks({ limit: 5 })
+        await spotifyApi.getMyTopTracks({ limit: 50 })
           .then(function(data) {
             let topTracksRaw = data.body.items;
 
