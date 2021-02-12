@@ -23,6 +23,8 @@
         <div class="collapsible-header"><i class="material-icons">album</i>Mutural favorite tracks</div>
         <div class="collapsible-body"><span>
             <ul>
+                <h4>Mutural favorite tracks: {{ trackArray.length }}</h4>
+                <br>
                 {{#each trackArray}}
                     <li><a href="{{this.track_url}}">
                         <b>{{this.track_name}}</b>
@@ -41,6 +43,7 @@
         <div class="collapsible-body">
             <span>
             <ul>
+                <h4>Mutural favorite artists: {{ artistArray.length }}</h4>                
                 {{#each artistArray}}
                 <li><b>{{this.artist_name}}</b></li>
                 <li>Popularity: {{this.artist_popularity}} / 100 </li>
