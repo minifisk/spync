@@ -8,6 +8,11 @@ Run by:
 
 1) Creating a .ENV file with the following variables 
 
+Variables for session secret:
+
+SESSION_SECRET = "your_session_secret" <br>
+
+
 Variables for a MYSQL database host:
 
 DB_HOST = "database endpoint"<br>
