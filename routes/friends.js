@@ -40,12 +40,10 @@ router.post('/compare', ensureAuth, async (req, res) => {
     try {
         const currentUserData = await pool.query('SELECT user_id FROM users WHERE username = ?', [req.session.passport.user.username]);
         const currentUserId = currentUserData[0][0].user_id;
-        console.log(`current user id ${currentUserId}`)
         const friendToCompareWihData = await pool.query('SELECT * FROM users WHERE contactCode = ?', [req.body.contactCode]);
         const friendToCompareWihID = friendToCompareWihData[0][0].user_id;
         const friendToCompareWihName = friendToCompareWihData[0][0].displayName;
 
-        console.log(`friend user id ${friendToCompareWihID}`)
         
         // Get track preferences that both have
         const commonTracks = await pool.query('SELECT user1.user_id AS user_1, user2.user_id AS user_2, user2.track_id FROM trackPreferences AS user1 INNER JOIN trackPreferences AS user2 ON user2.track_id = user1.track_id AND user2.user_id <> user1.user_id WHERE user1.user_id = ? AND user2.user_id = ?', [friendToCompareWihID, currentUserId]);

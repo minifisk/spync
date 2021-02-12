@@ -45,7 +45,7 @@ var sessionStore = new MySQLStore(options);
 // Set app to ues sessions with above settings
 app.use(session({
 	key: 'session_cookie_name',
-	secret: 'session_cookie_secret',
+	secret: process.env.SESSION_SECRET,
 	store: sessionStore,
 	resave: false,
 	saveUninitialized: false
