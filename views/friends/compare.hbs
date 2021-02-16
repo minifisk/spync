@@ -58,16 +58,25 @@
         <div class="collapsible-header"><i class="material-icons">face</i>Mutural favorite artists</div>
         <div class="collapsible-body">
             <span>
-            <ul>
-                <h4>Mutural favorite artists: {{ artistArray.length }}</h4>                
-                {{#each artistArray}}
-                <li><b>{{this.artist_name}}</b></li>
-                <li>Popularity: {{this.artist_popularity}} / 100 </li>
-                <a href="{{this.artist_url}}">
-                    <img src="{{this.artist_image}}" alt="{{this.artist_name}}" width="300">
-                </a>
-                {{/each}}
-            </ul>
+                <h4>Mutural favorite artists: {{ artistArray.length }}</h4>
+
+                <div class="row collapsible-row">
+
+                    {{#each artistArray}}
+
+                    <div class="artistprofile">
+                        <b>{{this.artist_name}}</b>
+                        Popularity: {{this.artist_popularity}} %
+                        <a href="{{this.artist_url}}">
+                            <img src="{{this.artist_image}}" alt="{{this.artist_name}}" width="200">
+                        </a>
+                    </div>
+
+                    {{/each}}
+
+                </div>
+
+
             </span>
         </div>
     </li>
