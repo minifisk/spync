@@ -21,21 +21,37 @@
 <ul class="collapsible">
     <li>
         <div class="collapsible-header"><i class="material-icons">album</i>Mutural favorite tracks</div>
-        <div class="collapsible-body"><span>
-            <ul>
-                <h4>Mutural favorite tracks: {{ trackArray.length }}</h4>
+        <div class="collapsible-body">
+            <span>
+                <h4>Number of mutural favorite tracks: {{ trackArray.length }}</h4>
                 <br>
-                {{#each trackArray}}
-                    <li><a href="{{this.track_url}}">
-                        <b>{{this.track_name}}</b>
-                    </a> 
-                    - <b>{{this.track_artist}}</b> - Popularity: {{this.track_popularity}} / 100
-                </li>
-                {{/each}}
-            </ul>
 
-
-        </span> <br><br>  
+                <table class="striped">
+                    <thead>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Popularity among all listeners</th>
+                    </thead>
+                    <tbody>
+                        {{#each trackArray}}
+                        <tr>
+                            <td>
+                                <a href="{{this.track_url}}">
+                                <b>{{this.track_name}}</b>
+                                </a> 
+                            </td>
+                            <td>
+                                {{this.track_artist}}
+                            </td>
+                            <td>
+                                {{this.track_popularity}} %
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </span> 
+            <br><br>  
 </div>
     </li>
     <li>

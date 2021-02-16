@@ -47,9 +47,7 @@ router.post('/compare', ensureAuth, async (req, res) => {
         
         // Get track preferences that both have
         const commonTracks = await pool.query('SELECT user1.user_id AS user_1, user2.user_id AS user_2, user2.track_id FROM trackPreferences AS user1 INNER JOIN trackPreferences AS user2 ON user2.track_id = user1.track_id AND user2.user_id <> user1.user_id WHERE user1.user_id = ? AND user2.user_id = ?', [friendToCompareWihID, currentUserId]);
-        console.log(commonTracks);
         const commonTracksCount = commonTracks[0].length;
-        console.log(commonTracksCount)
         const trackArray = [];
         
         await Promise.all(
@@ -61,9 +59,7 @@ router.post('/compare', ensureAuth, async (req, res) => {
    
         // Get artist preferences that both have
         const commonArtists = await pool.query('SELECT user1.user_id AS user_1, user2.user_id AS user_2, user2.artist_id FROM artistPreferences AS user1 INNER JOIN artistPreferences AS user2 ON user2.artist_id = user1.artist_id AND user2.user_id <> user1.user_id WHERE user1.user_id = ? AND user2.user_id = ?', [friendToCompareWihID, currentUserId]);
-        console.log(commonArtists)
         const commonArtistsCount = commonArtists[0].length;
-        console.log(commonArtistsCount)
         const artistArray = [];
         
         await Promise.all(
@@ -120,6 +116,10 @@ router.get('/view', ensureAuth, async (req, res) => {
             friends.push(user.requester_id);
         })
     
+        // !!!! CODE BELOW IS EXPERIMENTAL TO SHOW NUMBER OF MATCHES IN THE
+        // VIEW ALL FRIENDS PAGE, NOT WORKING YET !!!!!
+
+
         // Array for storing data for friends
         let friendsData = [];
         let commonTracksCount = [];
@@ -144,10 +144,8 @@ router.get('/view', ensureAuth, async (req, res) => {
         // haven't been filled or have been deleted (which is done 
         //1 time per month for the current user
         const commonColumns = await pool.query('SELECT commonTracksCount FROM friendships WHERE requester_id = ? OR addressee_id = ?',[this_user_id, this_user_id]);
-        console.log(commonColumns[0][0].commonTracksCount)
         // If empty, update for each friendship
 
-        console.log(commonArtistsCount.length, commonTracksCount.length)
         return friendsData;
     }
 

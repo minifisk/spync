@@ -31,10 +31,11 @@
                 <div class="row collapsible-row">
            
                     {{#each artistPreferences}}
+
                         <div class="artistprofile">
                             <b>{{this.name}}</b><br>
                             <a href="{{this.url}}">
-                                <img src="{{this.image}}" alt="{{this.name}}" width="100">
+                                <img src="{{this.image}}" alt="{{this.name}}" width="200">
                             </a>
                         </div>
                          
@@ -66,7 +67,7 @@
                                     {{this.artist}} 
                                 </td>
                                 <td>
-                                    {{this.popularity}}%
+                                    {{this.popularity}} %
                                 </td>
                         </tr>
                         {{/each}}
