@@ -6,3 +6,16 @@ p {
   margin-top: 50px;
   text-align: center;
 }
+
+.collapsible-row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.artistprofile {
+  padding: 15px;
+  justify-content: center;
+  text-align: center;
+}

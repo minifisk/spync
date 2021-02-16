@@ -23,13 +23,19 @@ async function checkUser(username, displayName, profilePicture, email, contactCo
     const artist = await pool.query('SELECT * from artistPreferences WHERE user_id = ?', [user_id]);
     const track = await pool.query('SELECT * from trackPreferences WHERE user_id = ?', [user_id]);
 
-  
+    // Check if the preference arrays are emty, if so return true
     if(artist[0].length === 0 || track[0].length === 0) {
       return true;
     }
+
+    // Delete preference arrays if they contain rows older thn 30 days
     if (artist30day[0].length != 0 || track30day[0].length != 0) {
-      const deletedArtistsPreferences = await pool.query('DELETE FROM artistPreferences WHERE user_id = ?', [user_id]);
-      const deletedTrackPreferences = await pool.query('DELETE FROM trackPreferences WHERE user_id = ?', [user_id]);
+      await pool.query('DELETE FROM artistPreferences WHERE user_id = ?', [user_id]);
+      await pool.query('DELETE FROM trackPreferences WHERE user_id = ?', [user_id]);
+
+      // Delete common artists- and trackscount from friendships array to update with values from new preferences
+      await pool.query('UPDATE friendships SET commonTracksCount = null, commonArtistsCount = null WHERE requester_id = ? OR addressee_id = ?', [user_id, user_id]);
+
       return true;
     }
     return false;

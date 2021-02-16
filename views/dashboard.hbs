@@ -20,40 +20,65 @@
     <li>
         <div class="collapsible-header"><i class="material-icons">account_circle</i>Your user-code for sharing your profile</div>
         <div class="collapsible-body"><span>{{ contactCode }}</span> <br><br>  
-        <a href="/friends/add" class="waves-effect waves-light btn-small">Add a friend</a>
-
-
-</div>
+            <a href="/friends/add" class="waves-effect waves-light btn-small">Add a friend</a>
+        </div>
     </li>
-    <li>
-        <div class="collapsible-header"><i class="material-icons">face</i>Your favorite artists</div>
-        <div class="collapsible-body"><span>
-            <ul>
-                {{#each artistPreferences}}
-                <li><b>{{this.name}}</b></li>
-                <a href="{{this.url}}">
-                    <img src="{{this.image}}" alt="{{this.name}}" width="300">
-                </a>
-                {{/each}}
-            </ul>
 
-        </span></div>
-    </li>
     <li>
-        <div class="collapsible-header"><i class="material-icons">album</i>Your favorite songs</div>
-        <div class="collapsible-body"><span>
-            <ul>
-                {{#each trackPreferences}}
-                    <li><a href="{{this.url}}">
-                        <b>{{this.name}}</b>
-                    </a> 
-                    - {{this.artist}} - {{this.popularity}}
-                </li>
-                {{/each}}
-            </ul>
-        </span></div>
+        <div class="collapsible-header"><i class="material-icons">face</i>Your favorite artists (top 50)</div>
+        <div class="collapsible-body">
+            <span>
+                <div class="row collapsible-row">
+           
+                    {{#each artistPreferences}}
+                        <div class="artistprofile">
+                            <b>{{this.name}}</b><br>
+                            <a href="{{this.url}}">
+                                <img src="{{this.image}}" alt="{{this.name}}" width="100">
+                            </a>
+                        </div>
+                         
+                    {{/each}}
+                </div>
+            </span>
+        </div>
+    </li>
+    
+    <li>
+        <div class="collapsible-header"><i class="material-icons">album</i>Your favorite songs (top 50)</div>
+        <div class="collapsible-body">
+            <span>
+                <table class="striped">
+                    <thead>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Popularity among all listeners</th>
+                    </thead>
+                    <tbody>
+                        {{#each trackPreferences}}
+                        <tr>
+                                <td>
+                                    <a href="{{this.url}}">
+                                    <b>{{this.name}}</b>
+                                    </a> 
+                                </td>
+                                <td>
+                                    {{this.artist}} 
+                                </td>
+                                <td>
+                                    {{this.popularity}}%
+                                </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                
+            </span>
+        </div>
     </li>
 </ul>
+
+
 
     <div class="container login-container">
         <a href="/friends/view"class="waves-effect waves-light btn">View friends</a>
