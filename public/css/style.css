@@ -7,6 +7,17 @@ p {
   text-align: center;
 }
 
+.login-container-friends {
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.login-container-start {
+  width: 350px;
+  text-align: center;
+  margin-top: 50px;
+}
 
 .collapsible-row{
   display: grid;
