@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="spync" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ff813f" data-position="Right" data-x_margin="18" data-y_margin="18"></script> 
     <title>Add friends</title>
 
     <script>
@@ -43,6 +44,7 @@
     
     <input type="text" value={{ contactCode }} id="myInput">
     <button class="btn-small btn-gray" onclick="myFunction()"><i class="material-icons va-bottom">content_copy</i>Copy code</button>
+    <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https:://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>Share as SMS</a>
 
 
 <div class="row">
