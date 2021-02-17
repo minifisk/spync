@@ -14,16 +14,16 @@
 
 </script>
 
-<h6>Mutural music with {{friend}}</h6>
+<h6>Mutual music with {{friend}}</h6>
 
-<a href="/friends/view" class="waves-effect waves-light btn-small">Back to all friends</a>
+<a href="/friends/view" class="waves-effect waves-light btn-small"><i class="material-icons">arrow_back</i>Back to all friends</a>
 
 <ul class="collapsible">
     <li>
-        <div class="collapsible-header"><i class="material-icons">album</i>Mutural favorite tracks</div>
+        <div class="collapsible-header"><i class="material-icons">album</i>Mutual favorite tracks</div>
         <div class="collapsible-body">
             <span>
-                <h4>Number of mutural favorite tracks: {{ trackArray.length }}</h4>
+                <h6>Number of mutual favorite tracks: {{ trackArray.length }}</h6>
                 <br>
 
                 <table class="striped">
@@ -55,10 +55,10 @@
 </div>
     </li>
     <li>
-        <div class="collapsible-header"><i class="material-icons">face</i>Mutural favorite artists</div>
+        <div class="collapsible-header"><i class="material-icons">face</i>Mutual favorite artists</div>
         <div class="collapsible-body">
             <span>
-                <h4>Mutural favorite artists: {{ artistArray.length }}</h4>
+                <h6>Number of mutual favorite artists: {{ artistArray.length }}</h6>
 
                 <div class="row collapsible-row">
 
@@ -66,9 +66,9 @@
 
                     <div class="artistprofile">
                         <b>{{this.artist_name}}</b><br>
-                        Popularity: {{this.artist_popularity}} % <br>
+                        Popularity among all listeners: {{this.artist_popularity}} % <br>
                         <a href="{{this.artist_url}}">
-                            <img src="{{this.artist_image}}" alt="{{this.artist_name}}" width="200">
+                            <img src="{{this.artist_image}}" alt="{{this.artist_name}}" width="240">
                         </a>
                     </div>
 

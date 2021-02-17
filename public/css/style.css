@@ -2,15 +2,38 @@ p {
   margin: 10px 0 !important;
 }
 .login-container {
-  width: 400px;
+  width: 100%;
   margin-top: 50px;
   text-align: center;
 }
+
 
 .collapsible-row{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   width: 100%;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  height: 60px;
+}
+
+.btn-small {
+  margin: 5px;
+}
+
+.btn-gray {
+  background-color: gray !important;  
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .artistprofile {
