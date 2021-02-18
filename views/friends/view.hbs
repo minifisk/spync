@@ -8,15 +8,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="spync" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ff813f" data-position="Right" data-x_margin="18" data-y_margin="18"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>View friends</title>
 </head>
+
 <body>
 
-            <div class="container login-container">
-            <h3>Your current friends</h3>
-            </div>
+    <div class="container login-container-friends">
+    <h3>Your current friends</h3>
+    </div>
 
-    <div class="container login-container-start button-container">
+    <div class="container login-container-friends">
             <a href="/"class="waves-effect waves-light btn-small"><i class="material-icons va-bottom">home</i>Home</a>
             <a href="/friends/add"class="waves-effect waves-light btn-small"><i class="material-icons va-bottom">add</i>Add friends</a>
     </div>
@@ -24,20 +26,20 @@
 <ul>
     {{#each friendArray}}
 
-       <div class="container login-container-start">
+       <div class="container login-container-friends">
         <div class="card">
             <div class="card-content">
                 <li><b>{{this.displayName}}</b></li>
                 <li><b>{{this.contactCode}}</b></li>
-                <img src="{{this.profilePicture}}" alt="{{this.name}}" width="300">    
+                <img src="{{this.profilePicture}}" alt="{{this.name}}" width="80%">    
                 
                 
-                <form action="./compare" method="POST" class="col s6">
+                <form action="./compare" method="POST" class="container">
                     <input type="hidden" id="contactCode" name="contactCode" value="{{this.contactCode}}">
                     <input type="submit" value="Compare music" class="btn-small">
                 </form> 
                 
-                <form action="./remove" method="POST" class="col s6">
+                <form action="./remove" method="POST" class="container">
                     <input type="hidden" id="contactCode" name="contactCode" value="{{this.contactCode}}">
                     <input type="submit" value="Remove friend" class="red darken-1 btn-small">
                 </form> 
@@ -46,12 +48,9 @@
             </div>
         </div>
     </div>
-
-
     {{/each}}
 </ul>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </body>
 </html>
