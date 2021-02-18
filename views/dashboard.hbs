@@ -43,6 +43,11 @@
     <i>If you enjoy the site and would like to help pay for the server costs, <b>press the coffecup in the corner</b> to "buy me a coffe" ;) - can be done with PayPal/Creditcard </i>
 </div>
 <div class="divider"></div>
+    <br>
+    <div class="container login-container button-container">
+        <a href="/friends/view"class="waves-effect waves-light btn"><i class="material-icons va-bottom">group</i>View friends</a>
+        <a href="/friends/add"class="waves-effect waves-light btn"><i class="material-icons va-bottom">add</i>Add friends</a>
+    </div>
 
 <h5>Your music preferences</h5>
 
@@ -54,13 +59,11 @@
                 <input type="text" value={{ contactCode }} id="myInput">
                 <div class=button-container>
                     <button class="btn-small btn-gray" onclick="myFunction()"><i class="material-icons va-bottom">content_copy</i>Copy code</button>
-                    <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https:://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>Share as SMS</a>
+                    <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>SMS code</a>
                 </div>  
                  
             </span> 
             <br><br>  
-            <a href="/friends/add" class="waves-effect waves-light btn-small"><i class="material-icons va-bottom">add</i>Add a friend</a>
-
         </div>
     </li>
 
@@ -120,7 +123,3 @@
 
 
 
-    <div class="container login-container button-container">
-        <a href="/friends/view"class="waves-effect waves-light btn"><i class="material-icons va-bottom">group</i>View friends</a>
-        <a href="/friends/add"class="waves-effect waves-light btn"><i class="material-icons va-bottom">add</i>Add friends</a>
-    </div>

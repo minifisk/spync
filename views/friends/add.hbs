@@ -44,7 +44,7 @@
     
     <input type="text" value={{ contactCode }} id="myInput">
     <button class="btn-small btn-gray" onclick="myFunction()"><i class="material-icons va-bottom">content_copy</i>Copy code</button>
-    <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https:://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>Share as SMS</a>
+    <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https:://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>SMS code</a>
 
 
 <div class="row">
@@ -53,6 +53,7 @@
             <div class="input-field">
                 <input type="text" id="title" name="title" autocomplete="off">
                 <label for="title">Insert user-code of the person you want to add to your friends</label>
+                <button type="submit" class="waves-effect waves-light btn-small">Add friend <i class="material-icons va-bottom">send</i></button>
             </div>
         </div>
 
