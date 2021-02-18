@@ -38,13 +38,19 @@
     </div>
 
     <h3>Add a friend</h3>
+    <p>Here you can add a new friend to your profile to be able to compare your music taste with them. You can either share your contact-code with them and let them add you, or you can fill in their contact-code and press "Add friend".</p>
 
 
-    <h5>Your user-code</h5>
+    <h5>Your unique user-code</h5>
     
     <input type="text" value={{ contactCode }} id="myInput">
     <button class="btn-small btn-gray" onclick="myFunction()"><i class="material-icons va-bottom">content_copy</i>Copy code</button>
     <a class="btn-small btn-gray" href="sms:/* phone number here */&body=My contact-code for adding me as a friend at https:://www.spync.se is: {{ contactCode }}"><i class="material-icons va-bottom">textsms</i>SMS code</a>
+
+
+<br><br>
+    <h5>Adding a friend by their unique user-code</h5>
+    <p>If you have the user-code for a friends profile, you can fill it out below and press "Add friend" to add them to your profile. If they don't have a user code, tell them to sign up on Spync.se!</p>
 
 
 <div class="row">
