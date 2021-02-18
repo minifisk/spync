@@ -12,6 +12,12 @@ router.get('/', ensureGuest, (req, res) => {
     })
 })
 
+// @Desc    About page
+// @route    GET / 
+router.get('/about', (req, res) => {
+    res.render('about')
+})
+
 
 
 // @Desc    Dashboard 
