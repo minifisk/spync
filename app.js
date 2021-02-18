@@ -76,10 +76,10 @@ app.listen(port, () => {
 });
 
 
-/* //404 page
+//404 page
 app.use((req, res) => {
     res.status(404).render('404')
-}) */
+})
 
 
 
