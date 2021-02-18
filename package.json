@@ -25,6 +25,7 @@
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
     "passport-spotify": "^1.1.0",
+    "serve-favicon": "^2.5.0",
     "spotify-web-api-node": "^5.0.0",
     "underscore": "^1.12.0"
   },

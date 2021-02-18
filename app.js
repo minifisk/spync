@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const passport = require('passport');
 const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
+var favicon = require('serve-favicon')
 
 // Dotenv for config files
 require('dotenv-flow').config();
@@ -14,6 +15,9 @@ require('./config/passport')(passport);
 
 //express app
 const app = express();
+
+// Serving the favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // Body parser
 app.use(express.urlencoded({ extended: false }));
