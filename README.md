@@ -1,10 +1,10 @@
 # spync
-An awesome app for comparing your music taste with your friends
+An awesome app for comparing your music taste with your friends. The app offer you to log in with your Spotify account, and from there the app creates a user account with your spotify username, retriever your top songs and top artists from the latest 6 months and store it in the database. You can view your top music and also add friends and compare their top music by adding them with their unique contact-code, or sharing your unique contact code and letting them add you.
 
 Acknowledgments
-Huge thanks to @blahah for helping me figure out some async problems with the passport module.
+Huge thanks to @blahah for helping me figure out some async problems with the passport module. Also huge thanks to @traversymedia for creating this awesome tutorial which have been a crucial inspiration for making this app possible.
 
-Run by:
+Run the app by:
 
 1) Creating a .ENV file with the following variables 
 
